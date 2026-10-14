@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Whose Pic? — TV</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@500;600&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/common.css">
+  <link rel="stylesheet" href="/host.css">
+</head>
+<body>
+  <!-- Splash: one click so the browser allows sound -->
+  <section id="splash" class="screen splash">
+    <div class="splash-copy">
+      <div class="code-label">A party game for one big screen and 3–20 phones</div>
+      <h1 class="logo huge">Whose<br>Pic<span class="q">?</span></h1>
+      <p class="tag">Everyone slips a few photos from their camera roll into the pile. They come up on every phone, one at a time. Guess whose it is before the clock runs out.</p>
+      <button id="createBtn" class="btn primary big">Open a room</button>
+    </div>
+    <div class="splash-prints" aria-hidden="true">
+      <div class="print sp sp1"><div class="img"></div><span class="cap">???</span></div>
+      <div class="print sp sp2"><div class="img"></div><span class="cap">yours??</span></div>
+      <div class="print sp sp3"><div class="img"></div><span class="cap">def. Sam's</span></div>
+    </div>
+    <div class="edge-code">WHOSE PIC 400 &nbsp;▸ 1A &nbsp;&nbsp;&nbsp; ▸ 2A &nbsp;&nbsp;&nbsp; ▸ 3A &nbsp;&nbsp;&nbsp; ▸ 4A &nbsp;&nbsp;&nbsp; SAFETY FILM</div>
+  </section>
+
+  <!-- Lobby -->
+  <section id="lobby" class="screen lobby hidden">
+    <aside class="lobby-side">
+      <div class="logo mid">Whose Pic<span class="q">?</span></div>
+
+      <div class="join">
+        <div class="print qr-print">
+          <img id="qr" class="qr" alt="QR code to join the game">
+          <span class="cap">scan me</span>
+        </div>
+        <div class="join-text">
+          <div class="code-label">Or open</div>
+          <div id="joinHost" class="join-url"></div>
+          <div class="code-label">and type</div>
+          <div id="roomCode" class="room-code"></div>
+        </div>
+      </div>
+
+      <div class="settings">
+        <div class="setting"><span class="code-label">Photos each</span><div id="setPhotos" class="seg"></div></div>
+        <div class="setting"><span class="code-label">Seconds to guess</span><div id="setTimer" class="seg"></div></div>
+        <div id="estimate" class="estimate code-label"></div>
+      </div>
+
+      <div class="start-row">
+        <button id="startBtn" class="btn go big" disabled>Start</button>
+        <div id="startHint" class="start-hint"></div>
+      </div>
+    </aside>
+
+    <main class="sheet">
+      <div class="sheet-head">
+        <h2 class="logo">Who's in</h2>
+        <span id="playerCount" class="code-label"></span>
+        <span class="code-label sheet-tip">Click someone to remove them</span>
+      </div>
+      <div id="lobbyPlayers" class="sheet-grid"></div>
+      <div id="lobbyEmpty" class="lobby-empty">
+        <span class="hand">nobody yet…</span>
+        <span class="code-label">scan the code on the left</span>
+      </div>
+    </main>
+  </section>
+
+  <!-- Game: live leaderboard -->
+  <section id="game" class="screen game hidden">
+    <header class="game-top">
+      <div class="logo small">Whose Pic<span class="q">?</span></div>
+      <div id="roundLabel" class="round-label"></div>
+      <div class="top-tools">
+        <button id="skipBtn" class="btn small ghost">Skip photo</button>
+        <button id="endBtn" class="btn small ghost">End game</button>
+      </div>
+    </header>
+
+    <div class="stage">
+      <div id="timerWrap" class="timer">
+        <svg viewBox="0 0 100 100"><circle class="track" cx="50" cy="50" r="44"/><circle id="timerArc" class="arc" cx="50" cy="50" r="44"/></svg>
+        <span id="timerNum">10</span>
+      </div>
+      <div id="banner" class="banner"></div>
+    </div>
+
+    <div id="board" class="board"></div>
+  </section>
+
+  <!-- Results -->
+  <section id="ended" class="screen ended hidden">
+    <div class="ended-head">
+      <div class="code-label">Final standings</div>
+      <h1 class="logo ended-title">That's a wrap</h1>
+    </div>
+    <div id="podium" class="podium"></div>
+    <div id="awards" class="awards"></div>
+    <div class="ended-foot">
+      <button id="againBtn" class="btn go big">Play again</button>
+      <span class="code-label">All photos from this game have been deleted.</span>
+    </div>
+  </section>
+
+  <div id="reactions" class="reactions"></div>
+  <div id="confetti" class="confetti"></div>
+
+  <div class="corner-tools">
+    <button id="muteBtn" class="corner-btn">Sound on</button>
+    <button id="fsBtn" class="corner-btn">Fullscreen</button>
+  </div>
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/sound.js"></script>
+  <script src="/host.js"></script>
+</body>
+</html>

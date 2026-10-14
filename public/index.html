@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#0e0c0b">
+  <title>Whose Pic?</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600;800&family=IBM+Plex+Mono:wght@500;600&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/common.css">
+  <link rel="stylesheet" href="/play.css">
+</head>
+<body>
+  <div id="offline" class="offline hidden">Lost connection — reconnecting</div>
+
+  <!-- Join -->
+  <section id="join" class="screen join">
+    <div class="join-head">
+      <div class="code-label">Photo guessing game</div>
+      <h1 class="logo hero">Whose<br>Pic<span class="q">?</span></h1>
+    </div>
+    <form id="joinForm" class="join-form" autocomplete="off">
+      <label class="field">
+        <span class="code-label">Room code — it's on the TV</span>
+        <input id="codeInput" class="code-input" maxlength="4" placeholder="····" autocapitalize="characters" spellcheck="false">
+      </label>
+      <label class="field">
+        <span class="code-label">Your name</span>
+        <input id="nameInput" maxlength="14" placeholder="What people call you" spellcheck="false">
+      </label>
+      <div class="field">
+        <span class="code-label">Pick a face</span>
+        <div id="avatarGrid" class="avatar-grid"></div>
+      </div>
+      <button id="joinBtn" class="btn primary wide" type="submit">Join</button>
+      <div id="joinError" class="error"></div>
+    </form>
+    <a class="host-link" href="/host">Hosting? Open this page on the TV instead →</a>
+  </section>
+
+  <!-- Lobby: pick photos -->
+  <section id="lobby" class="screen hidden">
+    <header class="me-bar">
+      <span id="meAvatar" class="me-av"></span>
+      <span id="meName" class="me-name"></span>
+      <span id="meRoom" class="code-label"></span>
+      <button id="leaveBtn" class="btn small ghost">Leave</button>
+    </header>
+
+    <section class="block">
+      <div id="pickStep" class="code-label"></div>
+      <h2 id="pickTitle" class="block-title"></h2>
+      <p id="pickSub" class="sub"></p>
+      <div id="thumbs" class="thumbs"></div>
+      <input id="fileInput" type="file" accept="image/*" multiple hidden>
+      <div id="pickActions" class="stack"></div>
+      <p class="fine">Only the photos you pick leave your phone. They're deleted when the game ends.</p>
+    </section>
+
+    <section id="leaderCard" class="block hidden">
+      <div class="code-label">You joined first, so you're running it</div>
+      <div class="setting"><span>Photos each</span><div id="setPhotos" class="seg"></div></div>
+      <div class="setting"><span>Seconds to guess</span><div id="setTimer" class="seg"></div></div>
+      <button id="startBtn" class="btn go wide">Start the game</button>
+      <div id="startHint" class="code-label center"></div>
+    </section>
+
+    <div id="waitCard" class="wait"></div>
+  </section>
+
+  <!-- Round: photo + names / reveal -->
+  <section id="round" class="screen round hidden">
+    <div class="round-top">
+      <span id="roundNo" class="code-label"></span>
+      <span id="doubleTag" class="double hidden">Double points</span>
+    </div>
+    <div class="timebar"><i id="timebarFill"></i></div>
+    <div id="ownerBanner" class="owner-banner hidden">This one's <b>yours</b>. Tap any name so nobody catches on.</div>
+    <div class="print photo-print" id="photoFrame">
+      <div class="photo-area">
+        <img id="photo" alt="Mystery photo">
+        <div id="photoLoading" class="photo-loading code-label">Developing…</div>
+        <div id="stampSlot" class="stamp-slot"></div>
+      </div>
+      <div id="caption" class="caption">whose?</div>
+    </div>
+    <div id="choices" class="choices"></div>
+    <div id="result" class="result hidden"></div>
+    <div id="reactBar" class="react-bar hidden"></div>
+  </section>
+
+  <!-- End -->
+  <section id="ended" class="screen ended hidden">
+    <div class="code-label">You finished</div>
+    <div id="finalPlace" class="final-place"></div>
+    <div id="finalScore" class="final-score"></div>
+    <div id="myAwards" class="my-awards"></div>
+    <p class="code-label">The full podium is on the TV</p>
+    <button id="againBtn" class="btn go wide hidden">Play again</button>
+    <p id="againWait" class="code-label hidden">Waiting for the host to start another round</p>
+  </section>
+
+  <!-- Notices (removed / room closed) -->
+  <section id="notice" class="screen notice hidden">
+    <h2 id="noticeText" class="logo notice-title"></h2>
+    <p id="noticeSub" class="sub"></p>
+    <button id="noticeBtn" class="btn primary wide">Join another game</button>
+  </section>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/play.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "whose-pic",
+  "version": "1.0.0",
+  "description": "Whose Pic? - a party game where everyone guesses whose photo it is. Phones are controllers, the TV shows a live leaderboard.",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "bots": "node scripts/bots.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^4.22.3",
+    "qrcode": "^1.5.4",
+    "socket.io": "^4.8.4"
+  },
+  "devDependencies": {
+    "socket.io-client": "^4.8.4"
+  }
+}
