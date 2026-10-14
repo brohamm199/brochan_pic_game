@@ -505,10 +505,9 @@ io.on('connection', (socket) => {
     if (isHost && room) closeRoom(room);
   });
 
-  // ----- host or party leader -----
-
+  // Settings belong to the TV only.
   socket.on('game:settings', (s = {}) => {
-    if (!hostOrLeader() || room.phase !== 'lobby') return;
+    if (!isHost || !room || room.phase !== 'lobby') return;
     const n = Number(s.photosPerPlayer);
     if (Number.isInteger(n) && n >= 1 && n <= MAX_PHOTOS) room.settings.photosPerPlayer = n;
     const t = Number(s.timer);

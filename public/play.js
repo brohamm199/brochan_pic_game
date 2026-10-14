@@ -199,14 +199,6 @@ function renderLobby() {
   // Leader controls
   $('leaderCard').classList.toggle('hidden', !state.isLeader);
   if (state.isLeader) {
-    $('setPhotos').innerHTML = [1, 2, 3, 4, 5].map((n) => `<button data-n="${n}" class="${n === need ? 'on' : ''}">${n}</button>`).join('');
-    $('setPhotos').querySelectorAll('button').forEach((b) => {
-      b.onclick = () => socket.emit('game:settings', { photosPerPlayer: Number(b.dataset.n) });
-    });
-    $('setTimer').innerHTML = [5, 10, 15].map((t) => `<button data-t="${t}" class="${t === settings.timer ? 'on' : ''}">${t}s</button>`).join('');
-    $('setTimer').querySelectorAll('button').forEach((b) => {
-      b.onclick = () => socket.emit('game:settings', { timer: Number(b.dataset.t) });
-    });
     $('startBtn').disabled = !state.canStart;
     $('startBtn').onclick = () => socket.emit('game:start', null, (res) => { if (!res?.ok) toast(res?.error || 'Could not start'); });
     const mins = Math.max(1, Math.round(state.estimate.seconds / 60));
